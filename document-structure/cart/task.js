@@ -2,7 +2,6 @@
 
 const product = document.querySelector(".products");
 const cartProducts = document.querySelector(".cart__products");
-let arr = [];
 
 product.onclick = function(e) {
     const target = e.target;
@@ -25,18 +24,15 @@ product.onclick = function(e) {
         const cartImage = product.querySelector(".product__image");
         const productQuantity = target.closest(".product__quantity");
         const productQuantityValue = productQuantity.querySelector(".product__quantity-value");
-        const cartProduct = cartProducts.querySelectorAll(".cart__product");
+        const cartProduct = Array.from(cartProducts.querySelectorAll(".cart__product"));
+        const cart = cartProduct.find(el => el.dataset.id == product.dataset.id);
 
-        if (arr.includes(product.dataset.id)) {
-            cartProduct.forEach((el) => {
-                if (product.dataset.id == el.dataset.id) {
-                    let cartProductCount = el.querySelector(".cart__product-count");
-                    let cartProductCountN = Number(cartProductCount.innerText);
-                    const productQuantityValueN = Number(productQuantityValue.innerText);
-                    cartProductCountN += productQuantityValueN;
-                    cartProductCount.innerHTML = cartProductCountN;
-                }
-            });
+        if (cart) {
+            let cartProductCount = cart.querySelector(".cart__product-count");
+            let cartProductCountN = Number(cartProductCount.innerText);
+            const productQuantityValueN = Number(productQuantityValue.innerText);
+            cartProductCountN += productQuantityValueN;
+            cartProductCount.innerHTML = cartProductCountN;
         } else {
             cartProducts.insertAdjacentHTML("afterbegin", `
                 <div class="cart__product" data-id="${product.dataset.id}">
@@ -44,7 +40,6 @@ product.onclick = function(e) {
                 <div class="cart__product-count">${productQuantityValue.innerHTML}</div>
                 </div>
             `);
-            arr.push(product.dataset.id);
         }
     }
 };

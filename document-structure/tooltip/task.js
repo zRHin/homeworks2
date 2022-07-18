@@ -6,12 +6,18 @@ hasTooltip.forEach((el) => {
     el.onclick = function() {
         let tooltip = document.querySelector(".tooltip");
         if (!document.contains(tooltip)) {
-            el.insertAdjacentHTML("afterEnd",'<div class="tooltip">Текст подсказки</div>');
+            const position = el.getBoundingClientRect();
+            el.insertAdjacentHTML("afterEnd", `<div class="tooltip" style="left: ${position.left}px; top: ${position.top + 20}px">Текст подсказки</div>`);
             let tooltip = document.querySelector(".tooltip");
             tooltip.textContent = el.title;
             tooltip.classList.add("tooltip_active");
         } else {
             tooltip.remove();
+            const position = el.getBoundingClientRect();
+            el.insertAdjacentHTML("afterEnd", `<div class="tooltip" style="left: ${position.left}px; top: ${position.top + 20}px">Текст подсказки</div>`);
+            let tooltipN = document.querySelector(".tooltip");
+            tooltipN.textContent = el.title;
+            tooltipN.classList.add("tooltip_active");
         }
         return false;
     }

@@ -2,22 +2,22 @@
 
 const tasksInput = document.getElementById("task__input");
 const tasksList = document.querySelector(".tasks__list");
+const addButton = document.getElementById("tasks__add");
 
-tasksInput.addEventListener("keyup", (e) => {
-    if (e.keyCode == 13) {
-        const inputValue = tasksInput.value;
-        if (inputValue !== "") {
-            tasksList.insertAdjacentHTML ("afterBegin",`
-                <div class="task">
-                    <div class="task__title">
-                        ${inputValue}
-                    </div>
-                    <a href="#" class="task__remove">&times;</a>
+addButton.addEventListener("click", function(event) {
+    const inputValue = tasksInput.value;
+    if (inputValue.trim() !== "") {
+        tasksList.insertAdjacentHTML ("afterBegin",`
+            <div class="task">
+                <div class="task__title">
+                    ${inputValue}
                 </div>
-            `);
-        }
-        tasksInput.value = "";
+                <a href="#" class="task__remove">&times;</a>
+            </div>
+        `);
     }
+    tasksInput.value = "";
+    event.preventDefault()
 });
 
 tasksList.onclick = function(e) {
