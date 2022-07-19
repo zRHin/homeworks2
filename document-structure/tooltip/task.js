@@ -12,12 +12,17 @@ hasTooltip.forEach((el) => {
             tooltip.textContent = el.title;
             tooltip.classList.add("tooltip_active");
         } else {
-            tooltip.remove();
-            const position = el.getBoundingClientRect();
-            el.insertAdjacentHTML("afterEnd", `<div class="tooltip" style="left: ${position.left}px; top: ${position.top + 20}px">Текст подсказки</div>`);
-            let tooltipN = document.querySelector(".tooltip");
-            tooltipN.textContent = el.title;
-            tooltipN.classList.add("tooltip_active");
+            let actTooltip = document.querySelector(".tooltip_active");
+            if (actTooltip.textContent !== el.title) {
+                tooltip.remove();
+                const position = el.getBoundingClientRect();
+                el.insertAdjacentHTML("afterEnd", `<div class="tooltip" style="left: ${position.left}px; top: ${position.top + 20}px">Текст подсказки</div>`);
+                let tooltipN = document.querySelector(".tooltip");           
+                tooltipN.textContent = el.title;
+                tooltipN.classList.add("tooltip_active");
+            } else {
+                tooltip.remove();
+            }
         }
         return false;
     }
